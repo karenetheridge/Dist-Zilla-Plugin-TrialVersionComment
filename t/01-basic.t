@@ -14,7 +14,6 @@ my $tzil = Builder->from_config(
         add_files => {
             path(qw(source dist.ini)) => simple_ini(
                 [ GatherDir => ],
-                [ MetaConfig => ],
                 [ 'TrialVersionComment' => ... ],
             ),
             path(qw(source lib Foo.pm)) => "package Foo;\n1;\n",
@@ -28,27 +27,6 @@ is(
     undef,
     'build proceeds normally',
 );
-
-cmp_deeply(
-    $tzil->distmeta,
-    superhashof({
-        x_Dist_Zilla => superhashof({
-            plugins => supersetof(
-                {
-                    class => 'Dist::Zilla::Plugin::TrialVersionComment',
-                    config => {
-                        'Dist::Zilla::Plugin::TrialVersionComment' => {
-                            ...
-                        },
-                    },
-                    name => 'TrialVersionComment',
-                    version => ignore,
-                },
-            ),
-        }),
-    }),
-    'plugin metadata, including dumped configs',
-) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 diag 'got log messages: ', explain $tzil->log_messages
     if not Test::Builder->new->is_passing;

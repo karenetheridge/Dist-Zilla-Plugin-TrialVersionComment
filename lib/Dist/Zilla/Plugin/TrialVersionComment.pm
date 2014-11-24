@@ -10,18 +10,6 @@ with 'Dist::Zilla::Role::...';
 
 use namespace::autoclean;
 
-around dump_config => sub
-{
-    my ($orig, $self) = @_;
-    my $config = $self->$orig;
-
-    $config->{+__PACKAGE__} = {
-        ...
-    };
-
-    return $config;
-};
-
 
 __PACKAGE__->meta->make_immutable;
 __END__
@@ -37,12 +25,6 @@ In your F<dist.ini>:
 =head1 DESCRIPTION
 
 This is a L<Dist::Zilla> plugin that...
-
-=head1 CONFIGURATION OPTIONS
-
-=head2 C<foo>
-
-...
 
 =head1 SUPPORT
 
