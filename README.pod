@@ -1,5 +1,15 @@
 =pod
 
+=encoding UTF-8
+
+=head1 NAME
+
+Dist::Zilla::Plugin::TrialVersionComment - Add a # TRIAL comment after your version declaration in trial # releases
+
+=head1 VERSION
+
+version 0.001
+
 =head1 SYNOPSIS
 
 In your F<dist.ini>:
@@ -8,13 +18,24 @@ In your F<dist.ini>:
 
 =head1 DESCRIPTION
 
-This is a L<Dist::Zilla> plugin that...
+This is a L<Dist::Zilla> plugin that  munges your F<.pm> files to add a
+C<# TRIAL> comment after C<$VERSION> assignments, if the release is C<--trial>.
 
-=head1 CONFIGURATION OPTIONS
+If the distribution is not a C<--trial> release (i.e. C<release_status> in
+metadata is C<stable>), this plugin does nothing.
 
-=head2 C<foo>
+=for stopwords PkgVersion OurPkgVersion
 
-...
+A C<$VERSION> assignment needs to exist in the module for any content to be
+added, so you need to position this plugin in F<dist.ini> after any
+C<$VERSION>-adding plugins such as
+L<[PkgVersion]|Dist::Zilla::Plugin::PkgVersion> or
+L<[OurPkgVersion]|Dist::Zilla::Plugin::OurPkgVersion>.
+
+Nothing currently parses these comments, but the idea is that things like
+L<Module::Metadata> might make use of this in the future.
+
+=for Pod::Coverage munge_files
 
 =head1 SUPPORT
 
@@ -26,11 +47,54 @@ I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 
 =head1 ACKNOWLEDGEMENTS
 
-...
+=for stopwords xdg
+
+Inspiration for this module came about through multiple toolchain conversations with David Golden (xdg).
 
 =head1 SEE ALSO
 
-=for :list
-* L<foo>
+=for stopwords BumpVersionAfterRelease
+OverridePkgVersion
+PkgVersionIfModuleWithPod
+SurgicalPkgVersion
+
+=over 4
+
+=item *
+
+L<[PkgVersion]|Dist::Zilla::Plugin::PkgVersion>
+
+=item *
+
+L<[OurPkgVersion]|Dist::Zilla::Plugin::OurPkgVersion>
+
+=item *
+
+L<[BumpVersionAfterRelease]|Dist::Zilla::Plugin::BumpVersionAfterRelease>
+
+=item *
+
+L<[OverridePkgVersion]|Dist::Zilla::Plugin::OverridePkgVersion>
+
+=item *
+
+L<[SurgicalPkgVersion]|Dist::Zilla::Plugin::SurgicalPkgVersion>
+
+=item *
+
+L<[PkgVersionIfModuleWithPod]|Dist::Zilla::Plugin::PkgVersionIfModuleWithPod>
+
+=back
+
+=head1 AUTHOR
+
+Karen Etheridge <ether@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Karen Etheridge.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
