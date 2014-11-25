@@ -99,6 +99,8 @@ C<# TRIAL> comment after C<$VERSION> assignments, if the release is C<--trial>.
 If the distribution is not a C<--trial> release (i.e. C<release_status> in
 metadata is C<stable>), this plugin does nothing.
 
+=for stopwords PkgVersion OurPkgVersion
+
 A C<$VERSION> assignment needs to exist in the module for any content to be
 added, so you need to position this plugin in F<dist.ini> after any
 C<$VERSION>-adding plugins such as
@@ -107,6 +109,8 @@ L<[OurPkgVersion]|Dist::Zilla::Plugin::OurPkgVersion>.
 
 Nothing currently parses these comments, but the idea is that things like
 L<Module::Metadata> might make use of this in the future.
+
+=for Pod::Coverage munge_files
 
 =head1 SUPPORT
 
@@ -118,9 +122,17 @@ I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 
 =head1 ACKNOWLEDGEMENTS
 
+=for stopwords xdg
+
 Inspiration for this module came about through multiple toolchain conversations with David Golden (xdg).
 
 =head1 SEE ALSO
+
+=for stopwords
+BumpVersionAfterRelease
+OverridePkgVersion
+PkgVersionIfModuleWithPod
+SurgicalPkgVersion
 
 =for :list
 * L<[PkgVersion]|Dist::Zilla::Plugin::PkgVersion>
