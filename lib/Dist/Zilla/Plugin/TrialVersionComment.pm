@@ -31,38 +31,48 @@ sub munge_files
 
         my $document = $self->ppi_document_for_file($file);
 
-        my $package_stmts = $document->find('PPI::Statement::Package');
+        my $package_stmt = $document->find_first('PPI::Statement::Package');
         $self->log_debug([ 'skipping %s: no package statement found', $file->name ]), return
-            if not $package_stmts;
+            if not $package_stmt;
 
-        my %seen_pkg;
+        my %seen_version_for_package;
+        my $package = 'main';
 
         my $munged = 0;
-        for my $stmt (@$package_stmts)
+
+        my $finder = sub {
+            my $node = $_[1];
+            return 0 if not $node->isa('PPI::Statement');
+
+            # this does not properly handle scopes - see the ::Package docs
+            $package = $node->namespace, return undef if $node->isa('PPI::Statement::Package');
+
+            # do not descend into the nodes comprising the statement
+            return undef unless !$node->isa('PPI::Statement::End')
+                && !$node->isa('PPI::Statement::Data')
+                && $node->content =~ /^[^#]*(?<!\\)\$VERSION\s*=/sm;
+
+            # find the line with this statement - this is safe to do even
+            # after munging because we do not insert or remove lines
+            my @content_lines = split("\n", $file->content, $node->line_number + 1);
+            return $content_lines[$#content_lines - 1] !~ /;\h*#\s*TRIAL/;   # no existing comment on line
+        };
+
+        my $matches = $document->find($finder);
+        if (not $matches)
         {
-            my $package = $stmt->namespace;
-            $self->log_debug([ 'skipping package re-declaration for %s', $package ]), next
-                if $seen_pkg{ $package }++;
+            $self->log_fatal('got PPI error') if not defined $matches;
+            next;
+        }
 
-            # note: keep in sync with Dist::Zilla::Role::PPI::document_assigns_to_variable
-            my $finder = sub {
-                my $node = $_[1];
-                return 1 if $node->isa('PPI::Statement')
-                    && !$node->isa('PPI::Statement::End')
-                    && !$node->isa('PPI::Statement::Data')
-                    && $node->content =~ /^[^#]*(?<!\\)\$VERSION\s*=/sm
-                    && $node->parent->content !~ /;\h*#\s*TRIAL/;   # no existing comment on line
-            };
-
-            my $node = $document->find_first($finder);
-            $self->log_debug([ '%s does not set $VERSION; skipping', $file->name ]), next
-                if not $node;
-
-            $self->log_debug([ 'Adding # TRIAL to $VERSION line for %s', $file->name ]);
+        foreach my $node (@{ $matches })
+        {
+            $self->log_debug([ 'Adding # TRIAL to $VERSION line for %s', $package ]);
 
             # inserted in reverse order... can I insert both at the same time?
             $node->insert_after(PPI::Token::Comment->new('# TRIAL'));
             $node->insert_after(PPI::Token::Whitespace->new(' '));
+            $document->flush_locations;
             $munged = 1;
         }
 
