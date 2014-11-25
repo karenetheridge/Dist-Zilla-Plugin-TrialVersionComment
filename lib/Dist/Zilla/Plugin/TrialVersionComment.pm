@@ -48,9 +48,9 @@ sub munge_files
             $package = $node->namespace, return undef if $node->isa('PPI::Statement::Package');
 
             # do not descend into the nodes comprising the statement
-            return undef unless !$node->isa('PPI::Statement::End')
-                && !$node->isa('PPI::Statement::Data')
-                && $node->content =~ /^[^#]*(?<!\\)\$VERSION\s*=/sm;
+            return undef unless $node->isa('PPI::Statement::Variable')
+                and $node->type eq 'our'
+                and grep { $_ eq '$VERSION' } $node->variables;
 
             # find the line with this statement - this is safe to do even
             # after munging because we do not insert or remove lines
