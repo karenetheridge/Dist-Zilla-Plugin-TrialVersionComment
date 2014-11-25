@@ -4,6 +4,7 @@ use warnings FATAL => 'all';
 use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
+use Test::Deep;
 use Test::Fatal;
 use Path::Tiny;
 
@@ -13,19 +14,13 @@ my $tzil = Builder->from_config(
         add_files => {
             path(qw(source dist.ini)) => simple_ini(
                 [ GatherDir => ],
-                [ 'TrialVersionComment' ],
+                [ 'TrialVersionComment' => ],
             ),
-            path(qw(source lib Foo.pm)) => <<'FOO',
-package Foo;
-our $VERSION = '0.001';
-# TRIAL comment will be added above
-1;
-FOO
+            path(qw(source lib Foo.pm)) => "package Foo;\nour \$VERSION = '0.001';\n1;\n",
         },
     },
 );
 
-$tzil->is_trial(1);
 $tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
@@ -39,8 +34,14 @@ my $content = $file->slurp_utf8;
 
 like(
     $content,
-    qr/^our \$VERSION = '0\.001'; # TRIAL$/m,
-    'TRIAL comment added to $VERSION assignment',
+    qr/^our \$VERSION = '0\.001';$/m,
+    'stable release: TRIAL comment not added',
+);
+
+cmp_deeply(
+    $tzil->log_messages,
+    supersetof('[TrialVersionComment] release_status is not trial; doing nothing'),
+    'log message about doing nothing',
 );
 
 diag 'got log messages: ', explain $tzil->log_messages
