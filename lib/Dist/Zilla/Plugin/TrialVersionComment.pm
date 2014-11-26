@@ -93,7 +93,7 @@ In your F<dist.ini>:
 
 =head1 DESCRIPTION
 
-This is a L<Dist::Zilla> plugin that  munges your F<.pm> files to add a
+This is a L<Dist::Zilla> plugin that munges your F<.pm> files to add a
 C<# TRIAL> comment after C<$VERSION> assignments, if the release is C<--trial>.
 
 If the distribution is not a C<--trial> release (i.e. C<release_status> in
