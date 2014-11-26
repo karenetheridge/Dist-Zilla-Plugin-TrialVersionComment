@@ -99,13 +99,13 @@ C<# TRIAL> comment after C<$VERSION> assignments, if the release is C<--trial>.
 If the distribution is not a C<--trial> release (i.e. C<release_status> in
 metadata is C<stable>), this plugin does nothing.
 
-=for stopwords PkgVersion OurPkgVersion
+=for stopwords PkgVersion OurPkgVersion RewriteVersion
 
-A C<$VERSION> assignment needs to exist in the module for any content to be
-added, so you need to position this plugin in F<dist.ini> after any
-C<$VERSION>-adding plugins such as
-L<[PkgVersion]|Dist::Zilla::Plugin::PkgVersion> or
-L<[OurPkgVersion]|Dist::Zilla::Plugin::OurPkgVersion>.
+Other plugins that munge versions into files also add the C<# TRIAL> comment (such as
+L<[PkgVersion]|Dist::Zilla::Plugin::PkgVersion>,
+L<[OurPkgVersion]|Dist::Zilla::Plugin::OurPkgVersion>, and
+L<[RewriteVersion]|Dist::Zilla::Plugin::RewriteVersion>, so you would
+generally only need this plugin if you added the version yourself, manually.
 
 Nothing currently parses these comments, but the idea is that things like
 L<Module::Metadata> might make use of this in the future.

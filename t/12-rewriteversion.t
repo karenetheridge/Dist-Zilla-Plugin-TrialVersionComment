@@ -1,7 +1,7 @@
 use strict;
 use warnings FATAL => 'all';
 
-use Test::Requires 'Dist::Zilla::Plugin::BumpVersionAfterRelease';
+use Test::Requires qw(Dist::Zilla::Plugin::RewriteVersion Dist::Zilla::Plugin::BumpVersionAfterRelease);
 
 use Test::More;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
@@ -21,10 +21,18 @@ my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
-            path(qw(source dist.ini)) => simple_ini(
+            path(qw(source dist.ini)) => dist_ini(
+                {
+                    name     => 'DZT-Sample',
+                    abstract => 'Sample DZ Dist',
+                    # no version here
+                    author   => 'E. Xavier Ample <example@example.org>',
+                    license  => 'Perl_5',
+                    copyright_holder => 'E. Xavier Ample',
+                },
                 [ GatherDir => ],
-                [ 'TrialVersionComment' ],
-                [ BumpVersionAfterRelease => ],
+                [ RewriteVersion => ],      # version provider and file munger
+                #[ 'TrialVersionComment' ], # not needed
             ),
             path(qw(source lib Foo.pm)) => $original_content,
         },
@@ -54,7 +62,7 @@ my $content = $file->slurp_utf8;
 like(
     $content,
     qr/^our \$VERSION = '0\.001'; # TRIAL$/m,
-    'TRIAL comment added to $VERSION assignment',
+    'TRIAL comment added to $VERSION assignment by [RewriteVersion]',
 );
 
 diag 'got log messages: ', explain $tzil->log_messages
