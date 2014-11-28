@@ -12,6 +12,7 @@ with
     'Dist::Zilla::Role::FileFinderUser' =>
         { default_finders => [ ':InstallModules', ':ExecFiles' ] },
 ;
+use Module::Runtime 'module_notional_filename';
 use namespace::autoclean;
 
 sub munge_files
@@ -23,8 +24,8 @@ sub munge_files
 
     foreach my $file ( @{ $self->found_files })
     {
-        next if $file->is_bytes;
-        next if not $file->does('Dist::Zilla::Role::MutableFile');
+        next if $file->can('is_bytes') and $file->is_bytes;
+        next if $INC{module_notional_filename('Dist::Zilla::Role::MutableFile')} and not $file->does('Dist::Zilla::Role::MutableFile');
 
         # it would be nice if we could just ask Module::Metadata for the line
         # (and character offset!) that it already found - might be faster

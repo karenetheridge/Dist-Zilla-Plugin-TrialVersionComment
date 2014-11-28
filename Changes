@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - make allowances in code for older Dist::Zilla
 
 0.002     2014-11-26 04:15:36Z
           - clarify in docs when this plugin is useful
