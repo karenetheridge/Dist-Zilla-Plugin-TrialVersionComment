@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.003     2014-12-03 03:06:24Z
           - make allowances in code for older Dist::Zilla
 
 0.002     2014-11-26 04:15:36Z
