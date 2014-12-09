@@ -13,6 +13,7 @@ with
         { default_finders => [ ':InstallModules', ':ExecFiles' ] },
 ;
 use Module::Runtime 'module_notional_filename';
+use PPI::Document;
 use namespace::autoclean;
 
 sub munge_files
