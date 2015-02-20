@@ -1,5 +1,5 @@
 use strict;
-use warnings FATAL => 'all';
+use warnings;
 
 use Test::Requires qw(Dist::Zilla::Plugin::RewriteVersion Dist::Zilla::Plugin::BumpVersionAfterRelease);
 
