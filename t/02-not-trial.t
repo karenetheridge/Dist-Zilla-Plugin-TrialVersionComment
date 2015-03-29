@@ -8,6 +8,9 @@ use Test::Deep;
 use Test::Fatal;
 use Path::Tiny;
 
+# protect from external environment
+local $ENV{TRIAL};
+
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {

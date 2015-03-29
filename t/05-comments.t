@@ -7,6 +7,9 @@ use Test::DZil;
 use Test::Fatal;
 use Path::Tiny;
 
+# protect from external environment
+local $ENV{TRIAL};
+
 my $original_content = <<'FOO';
 package Foo;
 

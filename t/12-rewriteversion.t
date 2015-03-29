@@ -10,6 +10,9 @@ use Test::Fatal;
 use Path::Tiny;
 use PadWalker 'closed_over';
 
+# protect from external environment
+local $ENV{TRIAL};
+
 my $original_content = <<'FOO';
 package Foo;
 our $VERSION = '0.001';
