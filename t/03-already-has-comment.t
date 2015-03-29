@@ -27,7 +27,7 @@ my $tzil = Builder->from_config(
     },
 );
 
-$tzil->is_trial(1);
+$ENV{TRIAL} = 1;
 $tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
