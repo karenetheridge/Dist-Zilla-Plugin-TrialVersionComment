@@ -3,7 +3,7 @@ use warnings;
 package Dist::Zilla::Plugin::TrialVersionComment;
 # ABSTRACT: Add a "# TRIAL" comment after your version declaration in trial releases
 # KEYWORDS: plugin modules package version comment trial release
-# vim: set ts=8 sw=4 tw=78 et :
+# vim: set ts=8 sts=4 sw=4 tw=78 et :
 
 use Moose;
 with
