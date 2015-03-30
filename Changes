@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - fix tests to avoid setting a newly-immutable config variable
+            directly (David Golden, PR#1)
 
 0.003     2014-12-03 03:06:24Z
           - make allowances in code for older Dist::Zilla
