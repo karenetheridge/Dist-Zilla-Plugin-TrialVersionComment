@@ -12,6 +12,8 @@ use Path::Tiny;
 # protect from external environment
 local $ENV{TRIAL};
 
+$ENV{TRIAL} = 1;
+
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -31,7 +33,6 @@ FOO
     },
 );
 
-$ENV{TRIAL} = 1;
 $tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },

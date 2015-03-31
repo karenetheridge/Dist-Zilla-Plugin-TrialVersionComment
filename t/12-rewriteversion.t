@@ -20,6 +20,8 @@ our $VERSION = '0.001';
 1;
 FOO
 
+$ENV{TRIAL} = 1;
+
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -50,7 +52,6 @@ like(
     '$VERSION declaration is something that [BumpVersionAfterRelease] will recognize',
 );
 
-$ENV{TRIAL} = 1;
 $tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
