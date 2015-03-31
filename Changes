@@ -1,4 +1,6 @@
-Revision history for Dist-Zilla-Plugin-TrialVersionComment
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
 
 0.004     2015-03-31 03:03:02Z
           - fix tests to avoid setting a newly-immutable config variable
