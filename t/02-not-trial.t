@@ -16,6 +16,7 @@ my $tzil = Builder->from_config(
     {
         add_files => {
             path(qw(source dist.ini)) => simple_ini(
+                { is_trial => 0 },  # merge into root section
                 [ GatherDir => ],
                 [ 'TrialVersionComment' => ],
             ),

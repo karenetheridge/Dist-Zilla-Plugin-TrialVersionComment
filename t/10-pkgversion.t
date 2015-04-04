@@ -10,13 +10,12 @@ use Path::Tiny;
 # protect from external environment
 local $ENV{TRIAL};
 
-$ENV{TRIAL} = 1;
-
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
         add_files => {
             path(qw(source dist.ini)) => simple_ini(
+                { is_trial => 1 },  # merge into root section
                 [ GatherDir => ],
                 [ PkgVersion => ],
                 #[ 'TrialVersionComment' ], # not needed

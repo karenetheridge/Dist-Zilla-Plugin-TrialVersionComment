@@ -20,8 +20,6 @@ our $VERSION = '0.001';
 1;
 FOO
 
-$ENV{TRIAL} = 1;
-
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -34,6 +32,7 @@ my $tzil = Builder->from_config(
                     author   => 'E. Xavier Ample <example@example.org>',
                     license  => 'Perl_5',
                     copyright_holder => 'E. Xavier Ample',
+                    is_trial => 1,
                 },
                 [ GatherDir => ],
                 [ RewriteVersion => ],      # version provider and file munger
