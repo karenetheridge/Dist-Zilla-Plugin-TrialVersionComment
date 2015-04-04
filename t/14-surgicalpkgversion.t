@@ -41,6 +41,8 @@ is(
     'build proceeds normally',
 );
 
+ok($tzil->is_trial, 'trial flag is set on the distribution');
+
 my $build_dir = path($tzil->tempdir)->child('build');
 my $file = $build_dir->child(qw(lib Foo.pm));
 my $content = $file->slurp_utf8;

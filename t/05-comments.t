@@ -25,6 +25,8 @@ This file has one of these, but we shouldn't munge this one...
 1;
 FOO
 
+$ENV{TRIAL} = 1;
+
 my $tzil = Builder->from_config(
     { dist_root => 't/does-not-exist' },
     {
@@ -38,13 +40,14 @@ my $tzil = Builder->from_config(
     },
 );
 
-$ENV{TRIAL} = 1;
 $tzil->chrome->logger->set_debug(1);
 is(
     exception { $tzil->build },
     undef,
     'build proceeds normally',
 );
+
+ok($tzil->is_trial, 'trial flag is set on the distribution');
 
 my $build_dir = path($tzil->tempdir)->child('build');
 my $file = $build_dir->child(qw(lib Foo.pm));
