@@ -12,6 +12,7 @@ use PadWalker 'closed_over';
 
 # protect from external environment
 local $ENV{TRIAL};
+local $ENV{RELEASE_STATUS};
 
 my $original_content = <<'FOO';
 package Foo;

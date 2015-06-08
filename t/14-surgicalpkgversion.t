@@ -11,6 +11,7 @@ use Path::Tiny;
 
 # protect from external environment
 local $ENV{TRIAL};
+local $ENV{RELEASE_STATUS};
 
 my $tzil = Builder->from_config(
     { dist_root => 'does-not-exist' },
