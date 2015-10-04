@@ -58,7 +58,7 @@ sub munge_files
 
             # find the line with this statement - this is safe to do even
             # after munging because we do not insert or remove lines
-            my @content_lines = split("\n", $file->content, $node->line_number + 1);
+            my @content_lines = split(/\n/, $file->content, $node->line_number + 1);
             return $content_lines[$#content_lines - 1] !~ /;\h*#\s*TRIAL/;   # no existing comment on line
         };
 
