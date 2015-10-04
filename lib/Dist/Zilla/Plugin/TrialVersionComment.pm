@@ -18,6 +18,20 @@ use Module::Runtime 'module_notional_filename';
 use PPI::Document;
 use namespace::autoclean;
 
+around dump_config => sub
+{
+    my ($orig, $self) = @_;
+    my $config = $self->$orig;
+
+    my $data = {
+        finder => $self->finder,
+        blessed($self) ne __PACKAGE__ ? ( version => $VERSION ) : (),
+    };
+    $config->{+__PACKAGE__} = $data if keys %$data;
+
+    return $config;
+};
+
 sub munge_files
 {
     my $self = shift;

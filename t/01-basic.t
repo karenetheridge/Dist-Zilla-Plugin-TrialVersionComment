@@ -6,6 +6,7 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Test::Fatal;
 use Path::Tiny;
+use Test::Deep;
 
 # protect from external environment
 local $ENV{TRIAL};
@@ -18,6 +19,7 @@ my $tzil = Builder->from_config(
             path(qw(source dist.ini)) => simple_ini(
                 { is_trial => 1 },  # merge into root section
                 [ GatherDir => ],
+                [ MetaConfig => ],
                 [ 'TrialVersionComment' ],
             ),
             path(qw(source lib Foo.pm)) => <<'FOO',
@@ -38,6 +40,27 @@ is(
 );
 
 ok($tzil->is_trial, 'trial flag is set on the distribution');
+
+cmp_deeply(
+    $tzil->distmeta,
+    superhashof({
+        x_Dist_Zilla => superhashof({
+            plugins => supersetof(
+                {
+                    class => 'Dist::Zilla::Plugin::TrialVersionComment',
+                    config => {
+                        'Dist::Zilla::Plugin::TrialVersionComment' => {
+                            finder => [':InstallModules', ':ExecFiles'],
+                        },
+                    },
+                    name => 'TrialVersionComment',
+                    version => Dist::Zilla::Plugin::TrialVersionComment->VERSION,
+                },
+            ),
+        }),
+    }),
+    'metadata is correct',
+) or diag 'got distmeta: ', explain $tzil->distmeta;
 
 my $build_dir = path($tzil->tempdir)->child('build');
 my $file = $build_dir->child(qw(lib Foo.pm));
