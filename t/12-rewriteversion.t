@@ -8,7 +8,6 @@ use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
 use Test::DZil;
 use Test::Fatal;
 use Path::Tiny;
-use PadWalker 'closed_over';
 
 local $ENV{TRIAL} = 1;
 local $ENV{RELEASE_STATUS} = 'testing';
@@ -43,11 +42,9 @@ my $tzil = Builder->from_config(
     },
 );
 
-my ($bumpversion_closures) = closed_over(\&Dist::Zilla::Plugin::BumpVersionAfterRelease::rewrite_version);
-
 like(
     $original_content,
-    ${$bumpversion_closures->{'$assign_regex'}},
+    Dist::Zilla::Plugin::BumpVersionAfterRelease::_Util->assign_re,
     '$VERSION declaration is something that [BumpVersionAfterRelease] will recognize',
 );
 
