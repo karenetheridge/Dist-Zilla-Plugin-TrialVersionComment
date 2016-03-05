@@ -7,9 +7,8 @@ use Test::DZil;
 use Test::Fatal;
 use Path::Tiny;
 
-# protect from external environment
-local $ENV{TRIAL};
-local $ENV{RELEASE_STATUS};
+local $ENV{TRIAL} = 1;
+local $ENV{RELEASE_STATUS} = 'testing';
 
 my $original_content = <<'FOO';
 package Foo;

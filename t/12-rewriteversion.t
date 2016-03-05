@@ -10,9 +10,8 @@ use Test::Fatal;
 use Path::Tiny;
 use PadWalker 'closed_over';
 
-# protect from external environment
-local $ENV{TRIAL};
-local $ENV{RELEASE_STATUS};
+local $ENV{TRIAL} = 1;
+local $ENV{RELEASE_STATUS} = 'testing';
 
 my $original_content = <<'FOO';
 package Foo;
@@ -26,7 +25,7 @@ my $tzil = Builder->from_config(
     {
         add_files => {
             path(qw(source dist.ini)) => dist_ini(
-                {
+                {   # use as root section
                     name     => 'DZT-Sample',
                     abstract => 'Sample DZ Dist',
                     # no version here
