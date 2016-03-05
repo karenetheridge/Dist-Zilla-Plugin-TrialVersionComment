@@ -13,7 +13,7 @@ local $ENV{RELEASE_STATUS};
 
 my $original_content = <<'FOO';
 package Foo;
-our $VERSION = '0.001';    #   TRIAL
+our $VERSION = '0.001';    # TRIAL
 # a TRIAL comment is already present; another one will not be added
 1;
 FOO
