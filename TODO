@@ -1,0 +1,12 @@
+
+TODO: support this syntax:
+
+$My::Package::VERSION = '1.23';
+
+our ($VERSION, $FOO) = ('0.123', 1);   # TODO?
+
+package Foo { ... }
+
+package Foo VERSION {
+    ...
+}
