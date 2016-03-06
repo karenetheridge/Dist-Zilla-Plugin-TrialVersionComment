@@ -8,7 +8,7 @@ Dist::Zilla::Plugin::TrialVersionComment - Add a "# TRIAL" comment after your ve
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 
@@ -35,15 +35,17 @@ generally only need this plugin if you added the version yourself, manually.
 Nothing currently parses these comments, but the idea is that things like
 L<Module::Metadata> might make use of this in the future.
 
+=head1 PURPOSE
+
+This is a rather silly plugin, and doesn't really add any value.  I suppose if
+you are adding C<$VERSION> statements with C<[PkgVersion]> it could be useful,
+but in that case I think I'd rather patch C<[PkgVersion]> to add the comment
+as well, rather than going to all the effort of re-parsing the perl document
+again.  I only really wrote this as an exercise in using L<PPI>, to help
+diagnose some issues I was seeing with L<Acme::LookOfDisapproval> and
+utf8-encoded perl code.
+
 =for Pod::Coverage munge_files
-
-=head1 SUPPORT
-
-=for stopwords irc
-
-Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-TrialVersionComment>
-(or L<bug-Dist-Zilla-Plugin-TrialVersionComment@rt.cpan.org|mailto:bug-Dist-Zilla-Plugin-TrialVersionComment@rt.cpan.org>).
-I am also usually active on irc, as 'ether' at C<irc.perl.org>.
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -86,21 +88,34 @@ L<[PkgVersionIfModuleWithPod]|Dist::Zilla::Plugin::PkgVersionIfModuleWithPod>
 
 =back
 
+=head1 SUPPORT
+
+Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-TrialVersionComment>
+(or L<bug-Dist-Zilla-Plugin-TrialVersionComment@rt.cpan.org|mailto:bug-Dist-Zilla-Plugin-TrialVersionComment@rt.cpan.org>).
+
+There is also a mailing list available for users of this distribution, at
+L<http://dzil.org/#mailing-list>.
+
+There is also an irc channel available for users of this distribution, at
+L<C<#distzilla> on C<irc.perl.org>|irc://irc.perl.org/#distzilla>.
+
+I am also usually active on irc, as 'ether' at C<irc.perl.org>.
+
 =head1 AUTHOR
 
 Karen Etheridge <ether@cpan.org>
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2014 by Karen Etheridge.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
 
 =head1 CONTRIBUTOR
 
 =for stopwords David Golden
 
 David Golden <dagolden@cpan.org>
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2014 by Karen Etheridge.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
