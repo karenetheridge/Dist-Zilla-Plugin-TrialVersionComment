@@ -128,6 +128,16 @@ generally only need this plugin if you added the version yourself, manually.
 Nothing currently parses these comments, but the idea is that things like
 L<Module::Metadata> might make use of this in the future.
 
+=head1 PURPOSE
+
+This is a rather silly plugin, and doesn't really add any value.  I suppose if
+you are adding C<$VERSION> statements with C<[PkgVersion]> it could be useful,
+but in that case I think I'd rather patch C<[PkgVersion]> to add the comment
+as well, rather than going to all the effort of re-parsing the perl document
+again.  I only really wrote this as an exercise in using L<PPI>, to help
+diagnose some issues I was seeing with L<Acme::LookOfDisapproval> and
+utf8-encoded perl code.
+
 =for Pod::Coverage munge_files
 
 =head1 ACKNOWLEDGEMENTS
