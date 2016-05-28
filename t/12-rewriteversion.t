@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::Requires qw(Dist::Zilla::Plugin::RewriteVersion Dist::Zilla::Plugin::BumpVersionAfterRelease);
+use Test::Needs qw(Dist::Zilla::Plugin::RewriteVersion Dist::Zilla::Plugin::BumpVersionAfterRelease);
 
 use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';

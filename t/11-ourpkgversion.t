@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::Requires 'Dist::Zilla::Plugin::OurPkgVersion';
+use Test::Needs 'Dist::Zilla::Plugin::OurPkgVersion';
 
 use Test::More 0.88;
 use if $ENV{AUTHOR_TESTING}, 'Test::Warnings';
