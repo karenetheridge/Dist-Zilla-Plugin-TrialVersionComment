@@ -42,9 +42,18 @@ my $tzil = Builder->from_config(
     },
 );
 
+my $assign_re =
+    eval { Dist::Zilla::Plugin::BumpVersionAfterRelease::_Util->assign_re }
+        ||
+    do {
+        require PadWalker;
+        my ($bumpversion_closures) = closed_over(\&Dist::Zilla::Plugin::BumpVersionAfterRelease::rewrite_version);
+        ${$bumpversion_closures->{'$assign_regex'}};
+    };
+
 like(
     $original_content,
-    Dist::Zilla::Plugin::BumpVersionAfterRelease::_Util->assign_re,
+    $assign_re,
     '$VERSION declaration is something that [BumpVersionAfterRelease] will recognize',
 );
 
