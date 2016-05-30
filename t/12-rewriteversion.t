@@ -47,7 +47,7 @@ my $assign_re =
         ||
     do {
         require PadWalker;
-        my ($bumpversion_closures) = closed_over(\&Dist::Zilla::Plugin::BumpVersionAfterRelease::rewrite_version);
+        my ($bumpversion_closures) = PadWalker::closed_over(\&Dist::Zilla::Plugin::BumpVersionAfterRelease::rewrite_version);
         ${$bumpversion_closures->{'$assign_regex'}};
     };
 

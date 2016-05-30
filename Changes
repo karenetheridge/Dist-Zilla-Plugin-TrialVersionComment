@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-TrialVersionComment
 
 {{$NEXT}}
+          - actually fix tests for earlier [BumpVersionAfterRelease]
 
 0.006     2016-05-29 04:26:06Z
           - fix tests for earlier [BumpVersionAfterRelease]
