@@ -68,7 +68,7 @@ sub munge_files
             # do not descend into the nodes comprising the statement
             return undef unless $node->isa('PPI::Statement::Variable')
                 and $node->type eq 'our'
-                and grep { $_ eq '$VERSION' } $node->variables;
+                and grep $_ eq '$VERSION', $node->variables;
 
             # find the line with this statement - this is safe to do even
             # after munging because we do not insert or remove lines
