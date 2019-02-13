@@ -1,9 +1,9 @@
 use strict;
 use warnings;
 package Dist::Zilla::Plugin::TrialVersionComment;
+# vim: set ts=8 sts=4 sw=4 tw=115 et :
 # ABSTRACT: Add a "# TRIAL" comment after your version declaration in trial releases
 # KEYWORDS: plugin modules package version comment trial release
-# vim: set ts=8 sts=4 sw=4 tw=115 et :
 
 our $VERSION = '0.008';
 
